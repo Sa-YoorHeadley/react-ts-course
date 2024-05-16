@@ -12,12 +12,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "noEmitOnError": true,
     "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true,
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
