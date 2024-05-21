@@ -1,22 +1,48 @@
-import Counter from "./components/Counter";
-import Heading from "./components/Heading";
-import List from "./components/List";
-import Section from "./components/Section";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+
+type User = {
+  id: number;
+  username: string;
+};
+
+type fibFunc = (n: number) => number;
+
+const fib: fibFunc = (n) => {
+  if (n < 2) return n;
+
+  return fib(n - 1) + fib(n - 2);
+};
+
+const myNum: number = 37;
 
 function App() {
-  const [count, setCount] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
+  const [users] = useState<User[] | null>(null);
+  // const [user, setUser] = useState<User>({} as User);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  console.log(inputRef?.current);
+  console.log(inputRef?.current?.value);
+
+  useEffect(() => {
+    console.log("mounting");
+    console.log("Users: ", users);
+
+    return () => console.log("unmounting");
+  }, [users]);
+
+  const addTwo = useCallback(() => setCount((prev) => prev + 2), []);
+
+  const result = useMemo<number>(() => fib(myNum), []);
 
   return (
-    <>
-      <Heading title={"Hello World!"} />
-      <Section title={"Different Title"}>This is my section.</Section>
-      <Counter setCount={setCount}>Count is {count}</Counter>
-      <List
-        items={["☕ Coffee", "🌮 Tacos", "💻 Code"]}
-        render={(item: string) => <span className="gold bold">{item}</span>}
-      />
-    </>
+    <div className="App">
+      <h1>{count}</h1>
+      <button onClick={addTwo}>Add</button>
+      <h2>{result}</h2>
+      <input type="text" ref={inputRef} />
+    </div>
   );
 }
 
